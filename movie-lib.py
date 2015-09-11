@@ -12,17 +12,16 @@ all_users={}
 
 class User:
         def __init__(self,user_id):
-            self.id_num=user_id
-            all_users[self.id]=self
+            self.id_num = user_id
+            all_users[self.user_id] = self
 
 
 class Movie:
-        def __init__(self, args):
+        def __init__(self,**kwargs):
             self.movie_id = ''
             self.name = ''
-            self.release_date = ''
             self.genres = []
-            all_movies{self.id]=self}
+            all_movies{self.id] = self}
         def rating(self):
             return self.ratings.values()
 
