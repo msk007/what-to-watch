@@ -43,7 +43,7 @@ class Movie:
             return all_movies[self.id].title
         def get_movies():
             with open('ml-100k/u.item', encoding='latin_1') as f:
-                reader =csv.DictReader(f, fieldnames=['movie_id', 'movie_title' ], 
+                reader =csv.DictReader(f, fieldnames=['movie_id', 'movie_title' ],
                 for row in reader:
                     Movie(int(row['movie_id']), row['movie_title'])
 
@@ -54,6 +54,12 @@ class Movie:
             squares =[diff ** 2 for diff in differences]
             sum_of_squares =sum(squares)
                 return 1/(1 + math.sqrt(sum_of_squares))
+
+        def load_users():
+            with open('ml-100k/u.user') as f:
+                reader = csv.DictReader(f, fieldnames=['user_id'], )
+                for row in reader:
+                    User(int(row['user_id']))
 
         def load_ratings():
             with open('ml-100k/u.data') as f:
@@ -70,13 +76,14 @@ class Rating:
             self.user_id = user_id
             self.item_id = movie_id
             self.item_id = stars
-            all_movies[self.movie_].add_rating[self]
+            all_movies[self.movie_].add_rating(self)
+            all_users[self.user.id]add_rating(self)
         def __repr__(self):
             return self.__str__()
 
 
-    def __str__(self):
-        return 'Rating(rating_user={}, rating_movie={}, rating={})'.format(self.user_id, self.movie_id, self.stars)
+        def __str__(self):
+            return 'Rating(rating_user={}, rating_movie={}, rating={})'.format(self.user_id, self.movie_id, self.stars)
 
 def main():
     load_data()
