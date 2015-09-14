@@ -35,13 +35,15 @@ class Movie:
             return self.ratings.values()
         def __repr__(self):
             return self.__str__()
+        def __str__(self):
+            return 'Movie(movie_id={}, movie_title={})'.format(self.ident, repr(self.title))
         def get_movie_ratings(self):
             return sorted(self.ratings.values(),reverse=True)
         def get_movie_title(self):
             return all_movies[self.id].title
         def get_movies():
             with open('ml-100k/u.item', encoding='latin_1') as f:
-                reader =csv.DictReader(f, fieldnames=['movie_id', 'movie_title' ], delimiter='|')
+                reader =csv.DictReader(f, fieldnames=['movie_id', 'movie_title' ], 
                 for row in reader:
                     Movie(int(row['movie_id']), row['movie_title'])
 
@@ -55,9 +57,9 @@ class Movie:
 
         def load_ratings():
             with open('ml-100k/u.data') as f:
-                reader =csv.DictReader(f, fieldnames=['user_id', 'item_id', 'rating'], delimiter='\t')
+                reader =csv.DictReader(f, fieldnames=['user_id', 'movie_id', 'rating'], t')
                 for row in reader:
-                    Rating(int(row['user_id']), int(row['item_id']), int(row['rating']))
+                    Rating(int(row['user_id']), int(row['movie_id']), int(row['rating']))
         def load_data():
             load_movies()
             load_users()
@@ -69,3 +71,17 @@ class Rating:
             self.item_id = movie_id
             self.item_id = stars
             all_movies[self.movie_].add_rating[self]
+        def __repr__(self):
+            return self.__str__()
+
+
+    def __str__(self):
+        return 'Rating(rating_user={}, rating_movie={}, rating={})'.format(self.user_id, self.movie_id, self.stars)
+
+def main():
+    load_data()
+    print(all_users[1].recommendations(10))
+
+
+if __name__ == '__main__':
+    main()
