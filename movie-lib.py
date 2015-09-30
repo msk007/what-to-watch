@@ -17,10 +17,10 @@ class User:
             self.id_num = user_id
             all_users[self.user_id] = self
             self.ratings={}
-
         def get_user_rating(self, rating):
             return self.ratings
-
+        def get_average_rating(self):
+            return sum([x.xtars for x in self.get])
         def add_user_rating(self):
             self.ratings[rating.movie]=rating.score
         def recommendations(self, num):
@@ -36,7 +36,7 @@ class User:
                         else:
                             recs[rat.item_id] = [rat, rat.stars*euclidean_distance(*euclid_prep(self, usr))]
                             sort_recs = sorted(recs.values(), key=lambda r: r[1], reverse=True)
-                                return ([all_movies[x[0].item_id] for x in sort_recs][:num])
+                            return ([all_movies[x[0].item_id] for x in sort_recs][:num])
 
 
         def get_top(self, num):
@@ -62,29 +62,33 @@ class Movie:
             return sorted(self.ratings.values(),reverse=True)
         def get_movie_title(self):
             return all_movies[self.id].title
+
 def get_movies():
     with open('ml-100k/u.item', encoding='latin_1') as f:
-        reader = csv.DictReader(f, fieldnames=['movie_id', 'movie_title', '', '', 'something_else' ], delimiter='|')
+        reader = csv.DictReader(f, fieldnames=['movie_id', 'movie_title', '', '', '' ], delimiter='|')
         for row in reader:
             Movie(int(row['movie_id']), row['movie_title'])
 
         def euclidean_distance(list_1, list_2):
             if len(list_1) is 0:
                 return 0
+
             differences =[list_1[idx] - list_2[idx] for idx in range(len(list_1))]
             squares =[diff ** 2 for diff in differences]
             sum_of_squares =sum(squares)
             return 1/(1 + math.sqrt(sum_of_squares))
+
         def euclid_prep(user_1, user_2):
             list_1=[y.stars for y in sorted([x for x in user_1.ratings.values() if x.item_id in user_2.ratings], key=lambda r:r.item_id)]
             list_2=[y.stars for y in sorted([x for x in user_2.ratings.values() if x.item_id in user_1.ratings], key=lambda r:r.item_id)]
-    return list_1, list_2
+            return list_1, list_2
+
     def load_users():
             with open('ml-100k/u.user') as f:
                 reader = csv.DictReader(f, fieldnames=['user_id'], )
                 for row in reader:
                     User(int(row['user_id']))
-
+def get_average_rating(self):
     def load_ratings():
         with open('ml-100k/u.data') as f:
             reader =csv.DictReader(f, fieldnames=['user_id', 'movie_id', 'rating'])
@@ -100,6 +104,7 @@ class Rating:
             self.user_id = user_id
             self.item_id = movie_id
             self.item_id = stars
+
             all_movies[self.movie_].add_rating(self)
             all_users[self.user.id].add_rating(self)
         def __repr__(self):
@@ -112,6 +117,10 @@ class Rating:
 def main():
     load_data()
     print(all_users[1].recommendations(10))
+
+def __repr__(self):
+    return self.__str__()
+
 
 
 if __name__ == '__main__':

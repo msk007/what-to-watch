@@ -9,6 +9,8 @@ movie2 =Movie(03, 'Titanic')
 rating1 =Rating(will.id, movie1.id, 3)
 rating2 =Rating(will.id, movie2.id, 5)
 rating3 =Rating(steve.id, movie1.id, 4)
+
+
 rating4 =Rating(steve.id, movie2.id, 5)
 kelly =User(3)
 list1 =[1,2,3,4,5]
